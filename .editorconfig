@@ -1,0 +1,34 @@
+# EditorConfig is awesome: http://EditorConfig.org
+# See for more details:
+# - https://github.com/dotnet/format/blob/master/.editorconfig
+# - https://github.com/dotnet/format/blob/master/docs/Supported-.editorconfig-options.md
+
+root = true
+
+[*]
+indent_style = space
+
+# Code files
+[*.{cs,csx,vb,vbx}]
+indent_size = 4
+insert_final_newline = true
+charset = utf-8-bom
+
+# XML project files
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+indent_size = 4
+
+# XML config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 4
+
+# JSON files
+[*.json]
+indent_size = 2
+
+[*.sh]
+end_of_line = lf
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = true
