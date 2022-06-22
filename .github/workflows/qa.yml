@@ -15,7 +15,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
@@ -23,9 +23,7 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Only new files
-          VALIDATE_ALL_CODEBASE: false
-          # Validate all the files using (basic) .editorconfig rules
+          VALIDATE_ALL_CODEBASE: false  # Only new files
           VALIDATE_EDITORCONFIG: true
           VALIDATE_CSHARP: true
           VALIDATE_JSON: true
@@ -37,7 +35,7 @@ jobs:
     env:
       DOTNET_NOLOGO: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # Disabling shallow clone is required for Nerdbank.GitVersioning and SonarCloud to work properly
           fetch-depth: 0

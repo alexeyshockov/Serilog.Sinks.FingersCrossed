@@ -1,7 +1,5 @@
 # Serilog.Sinks.FingersCrossed [![NuGet Serilog.Sinks.FingersCrossed](https://buildstats.info/nuget/Serilog.Sinks.FingersCrossed)](https://www.nuget.org/packages/Serilog.Sinks.FingersCrossed/)
 
-## Build status
-
 Buffered sink wrapper for Serilog.
 
 ## Getting started
@@ -9,7 +7,7 @@ Buffered sink wrapper for Serilog.
 Install from [NuGet](https://nuget.org/packages/serilog.sinks.fingerscrossed):
 
 `dotnet` CLI:
-```bash
+```shell
 dotnet add package Serilog.Sinks.FingersCrossed
 ```
 
