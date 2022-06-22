@@ -29,7 +29,6 @@ jobs:
           VALIDATE_JSON: true
           VALIDATE_MARKDOWN: true
           VALIDATE_YAML: true
-          YAML_CONFIG_FILE: .yamllint.yml
           VALIDATE_GITHUB_ACTIONS: true
   test:
     runs-on: ubuntu-latest
