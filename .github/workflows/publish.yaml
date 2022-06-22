@@ -42,4 +42,8 @@ jobs:
       - name: Build
         run: dotnet pack -c Release
       - name: Publish
-        run: dotnet nuget push src/*/bin/Release/*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push src/*/bin/Release/*.nupkg --skip-duplicate \
+            --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push src/*/bin/Release/*.snupkg --skip-duplicate \
+            --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
