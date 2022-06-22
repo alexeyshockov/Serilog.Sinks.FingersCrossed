@@ -1,0 +1,11 @@
+extends: default
+
+rules:
+  line-length:
+    max: 120
+    level: warning
+  brackets:
+    level: warning
+    max-spaces-inside: 1
+  truthy:
+    check-keys: false
