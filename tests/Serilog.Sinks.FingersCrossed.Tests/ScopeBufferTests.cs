@@ -1,13 +1,14 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Serilog.Events;
 
 namespace Serilog.Sinks.FingersCrossed.Tests;
 
+[SuppressMessage("ReSharper", "ArrangeTypeMemberModifiers")]
 public class ScopeBufferTests
 {
-    [Theory]
-    [AutoMoqData]
-    public void does_not_transit_back_when_triggered(LogEvent logEvent1, LogEvent logEvent2)
+    [Theory, AutoData]
+    void does_not_transit_back_when_triggered(LogEvent logEvent1, LogEvent logEvent2)
     {
         var sut = new ScopeBuffer(new LogBuffer());
 
@@ -20,21 +21,19 @@ public class ScopeBufferTests
         sut.FlushTriggered.Should().BeTrue();
     }
 
-    [Theory]
-    [AutoMoqData]
-    public void returns_nothing_if_not_triggered_yet(LogEvent logEvent1, LogEvent logEvent2)
+    [Theory, AutoData]
+    void returns_nothing_if_not_triggered_yet(LogEvent logEvent)
     {
         var sut = new ScopeBuffer(new LogBuffer());
 
-        var buffer = sut.Enqueue(logEvent1, _ => false);
+        var buffer = sut.Enqueue(logEvent, _ => false);
 
         sut.FlushTriggered.Should().BeFalse();
         buffer.Should().BeEmpty();
     }
 
-    [Theory]
-    [AutoMoqData]
-    public void returns_buffered_when_triggered(LogEvent logEvent1, LogEvent logEvent2, LogEvent logEvent3)
+    [Theory, AutoData]
+    void returns_buffered_when_triggered(LogEvent logEvent1, LogEvent logEvent2, LogEvent logEvent3)
     {
         var sut = new ScopeBuffer(new LogBuffer());
 
@@ -49,10 +48,8 @@ public class ScopeBufferTests
         buffer.Should().HaveCount(3).And.ContainInOrder(logEvent1, logEvent2, logEvent3);
     }
 
-    [Theory]
-    [AutoMoqData]
-    public void does_not_buffer_if_already_triggered(Predicate<LogEvent> trigger,
-        LogEvent logEvent1, LogEvent logEvent2)
+    [Theory, AutoData]
+    void does_not_buffer_if_already_triggered(Predicate<LogEvent> trigger, LogEvent logEvent1, LogEvent logEvent2)
     {
         var sut = new ScopeBuffer(new LogBuffer());
 

@@ -5,10 +5,11 @@ using Serilog.Sinks.InMemory.Assertions;
 namespace Serilog.Sinks.FingersCrossed.Tests;
 
 [SuppressMessage("ReSharper", "TemplateIsNotCompileTimeConstantProblem")]
+[SuppressMessage("ReSharper", "ArrangeTypeMemberModifiers")]
 public class IntegrationTests
 {
     [Fact]
-    public void Basic()
+    void Basic()
     {
         using var logger = new LoggerConfiguration()
             .WriteTo.FingersCrossed(c => c.InMemory())
@@ -20,7 +21,7 @@ public class IntegrationTests
     }
 
     [Fact]
-    public void DroppedScope()
+    void DroppedScope()
     {
         using var logger = new LoggerConfiguration()
             .WriteTo.FingersCrossed(c => c.InMemory())
@@ -35,7 +36,7 @@ public class IntegrationTests
     }
 
     [Fact]
-    public void TriggeredScope()
+    void TriggeredScope()
     {
         using var logger = new LoggerConfiguration()
             .WriteTo.FingersCrossed(c => c.InMemory())
@@ -52,7 +53,7 @@ public class IntegrationTests
     }
 
     [Fact]
-    public async Task MultipleAsyncScopes()
+    async Task MultipleAsyncScopes()
     {
         var random = new Random();
         var logger = new LoggerConfiguration()
