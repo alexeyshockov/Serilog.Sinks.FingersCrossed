@@ -8,7 +8,7 @@
         <IsPackable>true</IsPackable>
         <!-- See https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli -->
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        
+
         <PackageId>Serilog.Sinks.FingersCrossed</PackageId>
         <PackageTags>serilog</PackageTags>
         <PackageIcon>serilog-sink-nuget.png</PackageIcon>
@@ -39,7 +39,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <IncludeSource>true</IncludeSource>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        
+
         <!-- See https://blog.paranoidcoding.com/2016/04/05/deterministic-builds-in-roslyn.html -->
         <Deterministic>true</Deterministic>
     </PropertyGroup>

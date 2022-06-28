@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Serilog.Sinks.FingersCrossed\Serilog.Sinks.FingersCrossed.csproj" />
+        <ProjectReference Include="..\..\src\Serilog.Sinks.FingersCrossed\Serilog.Sinks.FingersCrossed.csproj" />
     </ItemGroup>
 
 </Project>
