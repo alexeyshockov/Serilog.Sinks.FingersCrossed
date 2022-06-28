@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using Serilog.Core;
 using Serilog.Debugging;
 using Serilog.Events;
@@ -11,24 +10,29 @@ internal sealed class BufferedSink : ILogEventSink, IDisposable
 {
     private readonly ILogEventSink _wrappedSink;
 
-    private readonly Predicate<LogEvent> _trigger;
-
     private readonly Func<IScopeBuffer?> _currentScope;
 
-    internal BufferedSink(ILogEventSink wrappedSink, Predicate<LogEvent> trigger, Func<IScopeBuffer?> currentScope)
+    private readonly Predicate<LogEvent> _flushTrigger;
+    private readonly Predicate<LogEvent> _passThroughFilter;
+
+    public BufferedSink(ILogEventSink wrappedSink, Func<IScopeBuffer?> currentScope,
+        Predicate<LogEvent> flushTrigger, Predicate<LogEvent>? passThroughFilter = null)
     {
-        _wrappedSink = wrappedSink ?? throw new ArgumentNullException(nameof(wrappedSink));
-        _trigger = trigger;
+        _wrappedSink = wrappedSink;
         _currentScope = currentScope;
+        _flushTrigger = flushTrigger;
+        _passThroughFilter = passThroughFilter ?? (_ => false);
     }
 
-    [ExcludeFromCodeCoverage]
-    public BufferedSink(ILogEventSink wrappedSink, Trigger trigger) :
-        this(wrappedSink, trigger.Matches, LogBuffer.GetCurrentBuffer)
+    public void Emit(LogEvent logEvent)
     {
+        if (_passThroughFilter(logEvent))
+            Proxy(logEvent);
+        else
+            Buffer(logEvent);
     }
 
-    private void DoEmit(LogEvent logEvent)
+    private void Proxy(LogEvent logEvent)
     {
         try
         {
@@ -40,22 +44,22 @@ internal sealed class BufferedSink : ILogEventSink, IDisposable
         }
     }
 
+    private void Buffer(LogEvent logEvent)
+    {
+        var scope = _currentScope();
+        if (scope is null || scope.FlushTriggered)
+            Proxy(logEvent); // Just proxy it as the scope has been triggered already
+        else
+            Flush(scope.Enqueue(logEvent, _flushTrigger));
+    }
+
     private void Flush(IImmutableQueue<LogEvent> logs)
     {
         if (logs.IsEmpty)
             return;
 
         foreach (var logEvent in logs)
-            DoEmit(logEvent);
-    }
-
-    public void Emit(LogEvent logEvent)
-    {
-        var scope = _currentScope();
-        if (scope is null || scope.FlushTriggered)
-            DoEmit(logEvent); // Just proxy it as the scope has been triggered already
-        else
-            Flush(scope.Enqueue(logEvent, _trigger));
+            Proxy(logEvent);
     }
 
     public void Dispose()
