@@ -6,6 +6,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Serilog.AspNetCore" Version="5.*" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.*" />
     </ItemGroup>

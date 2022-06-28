@@ -8,7 +8,7 @@ namespace Serilog;
 /// <summary>
 /// Extends <see cref="LoggerConfiguration"/> with methods for configuring buffered logging.
 /// </summary>
-public static class LoggerConfigurationAsyncExtensions
+public static class LoggerConfigurationFingersCrossedExtensions
 {
     /// <summary>
     /// Wraps a sink into a buffered sink, with a flush trigger.
@@ -21,7 +21,7 @@ public static class LoggerConfigurationAsyncExtensions
     public static LoggerConfiguration FingersCrossed(this LoggerSinkConfiguration loggerSinkConfiguration,
         Action<LoggerSinkConfiguration> configure,
         LogEventLevel flushFrom = LogEventLevel.Error,
-        Func<FilterConfiguration, FilterConfiguration>? configurePassThrough = null) => FingersCrossed(
+        Func<LevelFilterConfiguration, LevelFilterConfiguration>? configurePassThrough = null) => FingersCrossed(
         loggerSinkConfiguration, configure,
         fc => fc with { MinimumLevel = flushFrom }, configurePassThrough);
 
@@ -35,11 +35,11 @@ public static class LoggerConfigurationAsyncExtensions
     /// <returns>A <see cref="LoggerConfiguration"/> allowing configuration to continue.</returns>
     public static LoggerConfiguration FingersCrossed(this LoggerSinkConfiguration loggerSinkConfiguration,
         Action<LoggerSinkConfiguration> configure,
-        Func<FilterConfiguration, FilterConfiguration> configureFlush,
-        Func<FilterConfiguration, FilterConfiguration>? configurePassThrough = null) => FingersCrossed(
+        Func<LevelFilterConfiguration, LevelFilterConfiguration> configureFlush,
+        Func<LevelFilterConfiguration, LevelFilterConfiguration>? configurePassThrough = null) => FingersCrossed(
         loggerSinkConfiguration, configure,
-        configureFlush(new FilterConfiguration()).Create(),
-        configurePassThrough?.Invoke(new FilterConfiguration()).Create()
+        configureFlush(new LevelFilterConfiguration()).Create(),
+        configurePassThrough?.Invoke(new LevelFilterConfiguration()).Create()
     );
 
     /// <summary>

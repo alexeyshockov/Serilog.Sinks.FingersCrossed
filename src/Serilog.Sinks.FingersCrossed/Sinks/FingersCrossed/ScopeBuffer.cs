@@ -9,7 +9,7 @@ internal interface IScopeBuffer
 {
     bool FlushTriggered { get; }
 
-    IImmutableQueue<LogEvent> Enqueue(LogEvent logEvent, Predicate<LogEvent> trigger);
+    IImmutableQueue<LogEvent> Enqueue(LogEvent logEvent, bool triggers);
 }
 
 internal sealed class ScopeBuffer : IScopeBuffer, IDisposable
@@ -29,11 +29,11 @@ internal sealed class ScopeBuffer : IScopeBuffer, IDisposable
 
     public bool FlushTriggered { get; private set; }
 
-    public IImmutableQueue<LogEvent> Enqueue(LogEvent logEvent, Predicate<LogEvent> trigger)
+    public IImmutableQueue<LogEvent> Enqueue(LogEvent logEvent, bool triggers)
     {
         ImmutableInterlocked.Enqueue(ref _logs, logEvent);
 
-        if (!FlushTriggered && trigger(logEvent))
+        if (!FlushTriggered && triggers)
             FlushTriggered = true;
 
         return FlushTriggered

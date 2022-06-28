@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using Serilog.Core;
 using Serilog.Debugging;
 using Serilog.Events;
@@ -26,12 +27,14 @@ internal sealed class BufferedSink : ILogEventSink, IDisposable
 
     public void Emit(LogEvent logEvent)
     {
-        if (_passThroughFilter(logEvent))
-            Proxy(logEvent);
+        var scope = _currentScope();
+        if (scope is null || scope.FlushTriggered)
+            Proxy(logEvent); // Just proxy it as the scope has been triggered already
         else
-            Buffer(logEvent);
+            Buffer(scope, logEvent);
     }
 
+    [ExcludeFromCodeCoverage]
     private void Proxy(LogEvent logEvent)
     {
         try
@@ -44,13 +47,15 @@ internal sealed class BufferedSink : ILogEventSink, IDisposable
         }
     }
 
-    private void Buffer(LogEvent logEvent)
+    private void Buffer(IScopeBuffer scope, LogEvent logEvent)
     {
-        var scope = _currentScope();
-        if (scope is null || scope.FlushTriggered)
-            Proxy(logEvent); // Just proxy it as the scope has been triggered already
+        var triggers = _flushTrigger(logEvent);
+        var passesThrough = _passThroughFilter(logEvent);
+
+        if (passesThrough && !triggers)
+            Proxy(logEvent);
         else
-            Flush(scope.Enqueue(logEvent, _flushTrigger));
+            Flush(scope.Enqueue(logEvent, triggers));
     }
 
     private void Flush(IImmutableQueue<LogEvent> logs)

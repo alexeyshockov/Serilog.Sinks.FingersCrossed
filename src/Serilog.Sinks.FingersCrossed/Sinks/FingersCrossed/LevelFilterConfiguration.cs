@@ -4,12 +4,12 @@ using Serilog.Events;
 
 namespace Serilog.Sinks.FingersCrossed;
 
-public sealed record FilterConfiguration
+public sealed record LevelFilterConfiguration
 {
     /// <summary>
     /// Minimum log level to accept from.
     /// </summary>
-    public LogEventLevel MinimumLevel { get; init; } = LevelAlias.Minimum;
+    public LogEventLevel MinimumLevel { get; init; } = LogEventLevel.Error;
 
     /// <summary>
     /// Minimum log level overrides (source → level).
@@ -23,7 +23,7 @@ public sealed record FilterConfiguration
     /// <param name="source">Source context.</param>
     /// <param name="minimumLevel">Minimum log level to accept from.</param>
     /// <returns></returns>
-    public FilterConfiguration Override(string source, LogEventLevel minimumLevel) =>
+    public LevelFilterConfiguration Override(string source, LogEventLevel minimumLevel) =>
         this with { Overrides = Overrides.Add(source, minimumLevel) };
 
     // Multiple functions can be combined in the future
