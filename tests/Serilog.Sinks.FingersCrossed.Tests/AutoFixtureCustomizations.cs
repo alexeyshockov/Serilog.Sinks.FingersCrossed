@@ -62,7 +62,7 @@ internal record LogLevelGenerator : ISpecimenBuilder, ICustomization
     private IEnumerable<T> Sequence<T>(ISpecimenContext context) where T : Enum
     {
         while (true)
-            yield return (T) _builder.Create(typeof(T), context);
+            yield return (T)_builder.Create(typeof(T), context);
     }
 #pragma warning restore S2190
 }

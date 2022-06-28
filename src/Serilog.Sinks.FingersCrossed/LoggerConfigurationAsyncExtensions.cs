@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.Sinks.FingersCrossed;
@@ -21,8 +21,9 @@ public static class LoggerConfigurationAsyncExtensions
     public static LoggerConfiguration FingersCrossed(this LoggerSinkConfiguration loggerSinkConfiguration,
         Action<LoggerSinkConfiguration> configure,
         LogEventLevel flushFrom = LogEventLevel.Error,
-        Func<FilterConfiguration, FilterConfiguration>? configurePassThrough = null) => FingersCrossed(loggerSinkConfiguration,
-        configure, fc => fc with { MinimumLevel = flushFrom }, configurePassThrough);
+        Func<FilterConfiguration, FilterConfiguration>? configurePassThrough = null) => FingersCrossed(
+        loggerSinkConfiguration, configure,
+        fc => fc with { MinimumLevel = flushFrom }, configurePassThrough);
 
     /// <summary>
     /// Wraps a sink into a buffered sink, with a flush trigger.

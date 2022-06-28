@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Immutable;
 using Serilog.Core;
 using Serilog.Debugging;
