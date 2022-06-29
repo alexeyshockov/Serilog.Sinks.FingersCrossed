@@ -3,6 +3,7 @@
     <PropertyGroup>
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
     </PropertyGroup>
 
     <ItemGroup>
