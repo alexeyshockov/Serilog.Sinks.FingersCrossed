@@ -9,7 +9,7 @@ public sealed record LevelFilterConfiguration
     /// <summary>
     /// Minimum log level to accept from.
     /// </summary>
-    public LogEventLevel MinimumLevel { get; init; } = LogEventLevel.Error;
+    public LogEventLevel MinimumLevel { get; init; } = LogEventLevel.Warning;
 
     /// <summary>
     /// Minimum log level overrides (source → level).

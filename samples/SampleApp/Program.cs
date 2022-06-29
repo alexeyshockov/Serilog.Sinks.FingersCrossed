@@ -21,7 +21,7 @@ app.UseHttpsRedirection();
 app.Use(async (context, next) =>
 {
     using (LogBuffer.BeginScope())
-        await next();
+        await next(context);
 });
 if (app.Environment.IsDevelopment())
     app.UseSwagger().UseSwaggerUI();

@@ -12,20 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          # Disabling shallow clone is required for Nerdbank.GitVersioning and SonarCloud to work properly
+          # Disabling shallow clone is required for Nerdbank.GitVersioning to work properly
           fetch-depth: 0
-      - uses: actions/setup-dotnet@v1
+      - uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '3.1.x'
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-      - name: Install deps
-        run: dotnet restore
-      - name: Build
-        run: dotnet build -c Release --no-restore
-      - name: Run tests
-        run: dotnet test -c Release --no-build --verbosity=minimal
+          dotnet-version: |
+            3.1.x
+            6.0.x
+      - run: dotnet restore
+      - run: dotnet build -c Release --no-restore
+      - run: dotnet test -c Release --no-build --verbosity=minimal
   nuget:
     needs: test
     runs-on: ubuntu-latest
@@ -36,11 +32,10 @@ jobs:
         with:
           # Disabling shallow clone is required for Nerdbank.GitVersioning to work properly
           fetch-depth: 0
-      - uses: actions/setup-dotnet@v1
+      - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
-      - name: Build
-        run: dotnet pack -c Release
+      - run: dotnet pack -c Release
       - name: Publish
         run: |
           dotnet nuget push src/*/bin/Release/*.nupkg --skip-duplicate \

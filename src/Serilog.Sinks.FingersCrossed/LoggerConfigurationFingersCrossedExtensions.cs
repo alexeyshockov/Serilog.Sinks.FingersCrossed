@@ -38,7 +38,7 @@ public static class LoggerConfigurationFingersCrossedExtensions
         Func<LevelFilterConfiguration, LevelFilterConfiguration> configureFlush,
         Func<LevelFilterConfiguration, LevelFilterConfiguration>? configurePassThrough = null) => FingersCrossed(
         loggerSinkConfiguration, configure,
-        configureFlush(new LevelFilterConfiguration()).Create(),
+        configureFlush(new LevelFilterConfiguration { MinimumLevel = LogEventLevel.Error }).Create(),
         configurePassThrough?.Invoke(new LevelFilterConfiguration()).Create()
     );
 
