@@ -11,7 +11,7 @@ set -e
 dotnet build-server shutdown
 dotnet sonarscanner begin \
     /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN" \
-    /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" /v:"$NBGV_SemVer2" \
+    /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" /v:"$NBGV_Version" \
     /d:sonar.dotnet.excludeTestProjects=true \
     /d:sonar.cs.opencover.reportsPaths="tests/*/TestResults/*/coverage.opencover.xml" \
     /d:sonar.cs.vstest.reportsPaths="tests/*/TestResults/*.trx"
