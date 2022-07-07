@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using Serilog.Core;
 using Serilog.Debugging;
@@ -7,8 +6,20 @@ using Serilog.Events;
 
 namespace Serilog.Sinks.FingersCrossed;
 
+internal record DelayedLogEvent(Action<LogEvent> Sink, LogEvent Event)
+{
+    public void Flush() => Sink(Event);
+}
+
 internal sealed class BufferedSink : ILogEventSink, IDisposable
 {
+    public interface IScopeBuffer
+    {
+        bool FlushTriggered { get; }
+
+        void Enqueue(DelayedLogEvent logEvent, bool triggers);
+    }
+
     private readonly ILogEventSink _wrappedSink;
 
     private readonly Func<IScopeBuffer?> _currentScope;
@@ -55,16 +66,7 @@ internal sealed class BufferedSink : ILogEventSink, IDisposable
         if (passesThrough && !triggers)
             Proxy(logEvent);
         else
-            Flush(scope.Enqueue(logEvent, triggers));
-    }
-
-    private void Flush(IImmutableQueue<LogEvent> logs)
-    {
-        if (logs.IsEmpty)
-            return;
-
-        foreach (var logEvent in logs)
-            Proxy(logEvent);
+            scope.Enqueue(new DelayedLogEvent(Proxy, logEvent), triggers);
     }
 
     public void Dispose()

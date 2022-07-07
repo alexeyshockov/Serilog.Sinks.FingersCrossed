@@ -20,8 +20,20 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.Use(async (context, next) =>
 {
-    using (LogBuffer.BeginScope())
+    using var logBuffer = LogBuffer.BeginScope();
+    try
+    {
         await next(context);
+
+        if (context.Response.StatusCode >= 400)
+            logBuffer.Flush();
+    }
+    catch (Exception)
+    {
+        logBuffer.Flush();
+
+        throw;
+    }
 });
 if (app.Environment.IsDevelopment())
     app.UseSwagger().UseSwaggerUI();

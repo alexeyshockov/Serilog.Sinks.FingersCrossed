@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Immutable;
 using System.Threading;
-using Serilog.Events;
 
 namespace Serilog.Sinks.FingersCrossed;
 
-internal interface IScopeBuffer
+public interface IScopeBuffer : IDisposable
 {
-    bool FlushTriggered { get; }
-
-    IImmutableQueue<LogEvent> Enqueue(LogEvent logEvent, bool triggers);
+    void Flush();
 }
 
-internal sealed class ScopeBuffer : IScopeBuffer, IDisposable
+internal sealed class ScopeBuffer : IScopeBuffer, BufferedSink.IScopeBuffer
 {
-    private ImmutableQueue<LogEvent> _logs = ImmutableQueue<LogEvent>.Empty;
+    private ImmutableQueue<DelayedLogEvent> _logs = ImmutableQueue<DelayedLogEvent>.Empty;
 
     private readonly LogBuffer _scopeManager;
     private readonly ScopeBuffer? _previousBuffer;
@@ -29,20 +26,39 @@ internal sealed class ScopeBuffer : IScopeBuffer, IDisposable
 
     public bool FlushTriggered { get; private set; }
 
-    public IImmutableQueue<LogEvent> Enqueue(LogEvent logEvent, bool triggers)
+    public void Enqueue(DelayedLogEvent logEvent, bool triggers)
     {
         ImmutableInterlocked.Enqueue(ref _logs, logEvent);
 
         if (!FlushTriggered && triggers)
             FlushTriggered = true;
 
-        return FlushTriggered
-            ? Interlocked.Exchange(ref _logs, ImmutableQueue<LogEvent>.Empty)
-            : ImmutableQueue<LogEvent>.Empty;
+        if (FlushTriggered)
+            DoFlush();
+    }
+
+    public void Flush()
+    {
+        FlushTriggered = true;
+
+        DoFlush();
+    }
+
+    private void DoFlush()
+    {
+        var logs = Interlocked.Exchange(ref _logs, ImmutableQueue<DelayedLogEvent>.Empty);
+        if (logs.IsEmpty)
+            return;
+
+        foreach (var delayed in logs)
+            delayed.Flush();
     }
 
     public void Dispose()
     {
         _scopeManager.Scope.Value = _previousBuffer;
+
+        if (FlushTriggered)
+            Flush();
     }
 }
