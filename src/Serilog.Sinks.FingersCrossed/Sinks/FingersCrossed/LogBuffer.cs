@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
@@ -24,5 +23,5 @@ public sealed class LogBuffer
     /// Starts a new scope in which all the messages will be queued and flushed only when a certain log level is seen.
     /// </summary>
     /// <returns>An object that determines the scope's boundaries</returns>
-    public static IDisposable BeginScope() => new ScopeBuffer(Instance);
+    public static IScopeBuffer BeginScope() => new ScopeBuffer(Instance);
 }
