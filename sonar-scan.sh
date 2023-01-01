@@ -6,12 +6,12 @@ set -x
 set -e
 
 # $SONAR_TOKEN should be defined
-# NBGV_SemVer2 should also be defined to propagate the version to SonarCloud
+# $VERSION should also be defined to propagate the version to SonarCloud
 
 dotnet build-server shutdown
 dotnet sonarscanner begin \
     /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN" \
-    /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" /v:"$NBGV_Version" \
+    /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" /v:"$VERSION" \
     /d:sonar.dotnet.excludeTestProjects=true \
     /d:sonar.cs.opencover.reportsPaths="tests/*/TestResults/*/coverage.opencover.xml" \
     /d:sonar.cs.vstest.reportsPaths="tests/*/TestResults/*.trx"

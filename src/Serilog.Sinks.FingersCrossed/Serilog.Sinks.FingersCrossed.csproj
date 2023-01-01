@@ -16,7 +16,7 @@
         <Authors>Alexey Shokov</Authors>
         <!-- See https://devblogs.microsoft.com/nuget/add-a-readme-to-your-nuget-package/ -->
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/alexeyshockov/Serilog.Sinks.FingersCrossed</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -45,10 +45,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*" PrivateAssets="All" />
-        <PackageReference Include="Nerdbank.GitVersioning" Version="3.*" PrivateAssets="All" />
         <PackageReference Include="Serilog" Version="2.9.0" />
         <PackageReference Include="System.Collections.Immutable" Version="1.6.0" />
+
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*" PrivateAssets="All" />
+        <PackageReference Include="GitVersion.MsBuild" Version="5.*" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

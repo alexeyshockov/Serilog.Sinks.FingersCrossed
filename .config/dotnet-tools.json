@@ -3,9 +3,15 @@
   "isRoot": true,
   "tools": {
     "dotnet-sonarscanner": {
-      "version": "5.7.1",
+      "version": "5.9.2",
       "commands": [
         "dotnet-sonarscanner"
+      ]
+    },
+    "gitversion.tool": {
+      "version": "5.11.1",
+      "commands": [
+        "dotnet-gitversion"
       ]
     }
   }
