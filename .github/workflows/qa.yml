@@ -48,7 +48,5 @@ jobs:
       - run: dotnet gitversion /output buildserver
       - run: ./sonar-scan.sh
         env:
-
-          VERSION: $GitVersion_FullSemVer
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

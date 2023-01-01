@@ -5,13 +5,18 @@ set -x
 # Break the script if one of the command fails (returns non-zero status code)
 set -e
 
-# $SONAR_TOKEN should be defined
-# $VERSION should also be defined to propagate the version to SonarCloud
+# $SONAR_TOKEN must be defined
+# $GitVersion_FullSemVer can be used to specify the current version (see GitVersion)
+
+VERSION=""
+if [ -n "$GitVersion_FullSemVer" ]; then
+    VERSION="/v:"$GitVersion_FullSemVer
+fi
 
 dotnet build-server shutdown
 dotnet sonarscanner begin \
     /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN" \
-    /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" /v:"$VERSION" \
+    /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" $VERSION \
     /d:sonar.dotnet.excludeTestProjects=true \
     /d:sonar.cs.opencover.reportsPaths="tests/*/TestResults/*/coverage.opencover.xml" \
     /d:sonar.cs.vstest.reportsPaths="tests/*/TestResults/*.trx"
