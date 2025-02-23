@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Immutable;
-using System.Threading;
 
 namespace Serilog.Sinks.FingersCrossed;
 

@@ -6,15 +6,16 @@ on:
     branches: [ master, main ]
   pull_request:
     branches: [ master, main ]
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # Full history is needed to get a proper list of changed files
           fetch-depth: 0
-      - uses: github/super-linter@v4
+      - uses: github/super-linter@v7
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -30,20 +31,19 @@ jobs:
     env:
       DOTNET_NOLOGO: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # Disabling shallow clone is recommended by SonarCloud for improving relevancy of reporting
           fetch-depth: 0
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
-      - uses: actions/setup-dotnet@v3
+          java-version: 21
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            3.1.x
-            6.0.x
-            7.0.x
+            8.0.x
+            9.0.x
       - run: dotnet tool restore
       - run: dotnet gitversion /output buildserver
       - run: ./sonar-scan.sh

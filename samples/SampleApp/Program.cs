@@ -5,10 +5,10 @@ using Serilog.Sinks.FingersCrossed;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, lc) => lc
+builder.Host.UseSerilog((_, config) => config
     .MinimumLevel.Information()
     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-    .WriteTo.FingersCrossed(lsc => lsc.Console())
+    .WriteTo.FingersCrossed(sinkConfig => sinkConfig.Console())
 );
 
 builder.Services.AddControllers();
@@ -42,6 +42,9 @@ app.UseAuthorization();
 app.MapGet("/hello", ([FromServices] ILogger<WebApplication> logger) =>
     logger.LogInformation("This goes nowhere"));
 app.MapGet("/error", ([FromServices] ILogger<WebApplication> logger) =>
-    logger.LogError("Arbitrary error"));
+{
+    logger.LogInformation("This is logged");
+    logger.LogError("Arbitrary error");
+});
 
 app.Run();
