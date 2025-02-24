@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.FingersCrossed", "src\Serilog.Sinks.FingersCrossed\Serilog.Sinks.FingersCrossed.csproj", "{3BF84C35-AC8E-4EB3-989E-DC009A2C1FFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "samples\SampleApp\SampleApp.csproj", "{85EE60B9-7611-491C-8654-FDBD1F7286BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "examples\SampleApp\SampleApp.csproj", "{85EE60B9-7611-491C-8654-FDBD1F7286BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.FingersCrossed.Tests", "tests\Serilog.Sinks.FingersCrossed.Tests\Serilog.Sinks.FingersCrossed.Tests.csproj", "{D7D51494-D9FC-48F0-811B-2862B93BECBD}"
 EndProject

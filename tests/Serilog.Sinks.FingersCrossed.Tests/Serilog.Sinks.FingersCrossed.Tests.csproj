@@ -2,9 +2,6 @@
 
     <PropertyGroup>
         <TargetFrameworks>net8;net9</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-
-        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
