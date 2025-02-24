@@ -1,4 +1,3 @@
-using System;
 using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.Sinks.FingersCrossed;

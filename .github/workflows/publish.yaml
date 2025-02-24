@@ -4,22 +4,22 @@ name: Publish
 on:
   release:
     types: [ published ]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # Required for GitVersion
           fetch-depth: 0
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            3.1.x
-            6.0.x
-            7.0.x
+            8.0.x
+            9.0.x
       - run: dotnet restore
       - run: dotnet build -c Release --no-restore
       - run: dotnet test -c Release --no-build --verbosity=minimal
@@ -29,14 +29,14 @@ jobs:
     env:
       DOTNET_NOLOGO: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # Required for GitVersion
           fetch-depth: 0
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            7.0.x
+            9.0.x
       - run: dotnet pack -c Release
       - name: Publish
         run: |
