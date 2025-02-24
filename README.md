@@ -1,4 +1,7 @@
-# Serilog.Sinks.FingersCrossed [![NuGet Serilog.Sinks.FingersCrossed](https://buildstats.info/nuget/Serilog.Sinks.FingersCrossed)](https://www.nuget.org/packages/Serilog.Sinks.FingersCrossed/)
+# Serilog.Sinks.FingersCrossed
+
+[![NuGet Serilog.Sinks.FingersCrossed](https://img.shields.io/nuget/dt/Serilog.Sinks.FingersCrossed)](https://www.nuget.org/packages/Serilog.Sinks.FingersCrossed/)
+[![Code coverage](https://img.shields.io/sonar/coverage/alexeyshockov_Serilog.Sinks.FingersCrossed?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/project/overview?id=alexeyshockov_Serilog.Sinks.FingersCrossed)
 
 Buffered sink wrapper for Serilog.
 
