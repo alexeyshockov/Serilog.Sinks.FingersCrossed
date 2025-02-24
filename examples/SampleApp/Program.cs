@@ -47,4 +47,4 @@ app.MapGet("/error", ([FromServices] ILogger<WebApplication> logger) =>
     logger.LogError("Arbitrary error");
 });
 
-app.Run();
+await app.RunAsync();
