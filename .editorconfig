@@ -8,8 +8,11 @@ root = true
 [*]
 indent_style = space
 
+[*.sln]
+indent_style = tab
+
 # Code files
-[*.{cs,csx,vb,vbx}]
+[*.{cs,csx,vb,vbx,fs,fsx,fsi}]
 indent_size = 4
 max_line_length = 120
 insert_final_newline = true

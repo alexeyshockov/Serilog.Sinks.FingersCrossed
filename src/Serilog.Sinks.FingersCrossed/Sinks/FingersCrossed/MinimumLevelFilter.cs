@@ -36,8 +36,8 @@ internal class MinimumLevelFilter
     {
         _level = level;
         _overrides = (overrides ?? ImmutableArray<KeyValuePair<string, LogEventLevel>>.Empty)
-            .OrderByDescending(x => x.Key)
             .Where(x => !string.IsNullOrWhiteSpace(x.Key))
+            .OrderByDescending(x => x.Key)
             .Select(x => new LevelOverride(x.Key, x.Value))
             .ToImmutableArray();
     }
@@ -59,9 +59,8 @@ internal class MinimumLevelFilter
 
     private LogEventLevel DetermineLevel(string? context)
     {
-        foreach (var levelOverride in _overrides)
-            if (levelOverride.Matches(context))
-                return levelOverride.Level;
+        foreach (var levelOverride in _overrides.Where(levelOverride => levelOverride.Matches(context)))
+            return levelOverride.Level;
 
         return _level;
     }
