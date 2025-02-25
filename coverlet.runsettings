@@ -4,13 +4,6 @@
         <DataCollectors>
             <DataCollector friendlyName="XPlat code coverage">
                 <Configuration>
-                    <CodeCoverage>
-                        <ModulePaths>
-                            <Exclude>
-                                <ModulePath>.*\\examples\\.*\.dll</ModulePath>
-                            </Exclude>
-                        </ModulePaths>
-                    </CodeCoverage>
                     <Format>opencover</Format>
                 </Configuration>
             </DataCollector>

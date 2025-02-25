@@ -15,6 +15,7 @@ dotnet sonarscanner begin \
     /d:sonar.host.url="https://sonarcloud.io" /d:sonar.token="$SONAR_TOKEN" \
     /o:"alexeyshockov" /k:"alexeyshockov_Serilog.Sinks.FingersCrossed" "$VERSION" \
     /d:sonar.dotnet.excludeTestProjects=true \
+    /d:sonar.coverage.exclusions="**/examples/**" \
     /d:sonar.cs.opencover.reportsPaths="tests/*/TestResults/*/coverage.opencover.xml" \
     /d:sonar.cs.vstest.reportsPaths="tests/*/TestResults/*.trx"
 
