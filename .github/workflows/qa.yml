@@ -11,7 +11,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Full history is needed to get a proper list of changed files
           fetch-depth: 0
@@ -31,7 +31,7 @@ jobs:
     env:
       DOTNET_NOLOGO: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Disabling shallow clone is recommended by SonarCloud for improving relevancy of reporting
           fetch-depth: 0
